@@ -1,15 +1,14 @@
 package com.example.uidemoactivity
 
-import android.app.Application
 import androidx.lifecycle.*
-import com.example.uidemoactivity.dataEntity.AirPollutionInfoEntity
+import com.example.uidemoactivity.dataEntity.AirPollutionInfo
 import kotlinx.coroutines.*
 
 class MainViewModel(private val repository: MainRepository) : ViewModel() {
     val errorMessage = MutableLiveData<String>()
-    private var _topHorizontalInfoList = MutableLiveData<MutableList<AirPollutionInfoEntity>>()
+    private var _topHorizontalInfoList = MutableLiveData<MutableList<AirPollutionInfo>>()
     var topHorizontalInfoList = _topHorizontalInfoList
-    private var _downVerticalInfoList = MutableLiveData<MutableList<AirPollutionInfoEntity>>()
+    private var _downVerticalInfoList = MutableLiveData<MutableList<AirPollutionInfo>>()
     var downVerticalInfoList = _downVerticalInfoList
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
@@ -28,7 +27,7 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
         }
     }
 
-    private fun filterList(mInfoEntity: MutableList<AirPollutionInfoEntity>) {
+    private fun filterList(mInfoEntity: MutableList<AirPollutionInfo>) {
         var sum = mInfoEntity.sumOf {
             it.mPMStatus.toDouble()
         }

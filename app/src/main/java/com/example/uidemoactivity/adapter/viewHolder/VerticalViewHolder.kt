@@ -1,16 +1,15 @@
 package com.example.uidemoactivity.adapter.viewHolder
 
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uidemoactivity.R
 import com.example.uidemoactivity.adapter.RecyclerAdapter
-import com.example.uidemoactivity.dataEntity.AirPollutionInfoEntity
+import com.example.uidemoactivity.dataEntity.AirPollutionInfo
 import com.example.uidemoactivity.databinding.VerticalItemViewBinding
 
 class VerticalViewHolder(private val mBinding: VerticalItemViewBinding, private val listener: RecyclerAdapter.IClickListener) : RecyclerView.ViewHolder(mBinding.root){
-    private lateinit var entity: AirPollutionInfoEntity
-    fun setEntity(mEntity: AirPollutionInfoEntity){
+    private lateinit var entity: AirPollutionInfo
+    fun setEntity(mEntity: AirPollutionInfo){
         entity = mEntity
         mBinding.entity = mEntity
         setUIStatus()

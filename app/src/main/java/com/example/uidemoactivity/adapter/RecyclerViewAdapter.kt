@@ -3,10 +3,9 @@ package com.example.uidemoactivity.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.uidemoactivity.R
 import com.example.uidemoactivity.adapter.viewHolder.HorizontalViewHolder
 import com.example.uidemoactivity.adapter.viewHolder.VerticalViewHolder
-import com.example.uidemoactivity.dataEntity.AirPollutionInfoEntity
+import com.example.uidemoactivity.dataEntity.AirPollutionInfo
 import com.example.uidemoactivity.databinding.HorizonItemViewBinding
 import com.example.uidemoactivity.databinding.VerticalItemViewBinding
 
@@ -17,7 +16,7 @@ class RecyclerAdapter(private val currentType: Int, private val _listener: IClic
         private const val ITEM_VERTICAL = 1
     }
 
-    var infoList: List<AirPollutionInfoEntity> = listOf()
+    var infoList: List<AirPollutionInfo> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()

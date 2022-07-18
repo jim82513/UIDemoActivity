@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="entity"
-            type="com.example.uidemoactivity.dataEntity.AirPollutionInfoEntity" />
+            type="com.example.uidemoactivity.dataEntity.AirPollutionInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

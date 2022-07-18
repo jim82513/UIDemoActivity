@@ -2,7 +2,7 @@ package com.example.uidemoactivity.dataEntity
 
 import com.google.gson.annotations.SerializedName
 
-data class AirPollutionInfoEntity(
+data class AirPollutionInfo(
     @SerializedName("siteid")
     var mSiteID: String,
     @SerializedName("sitename")

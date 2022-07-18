@@ -8,6 +8,5 @@ class MainRepository(private val retrofitService: RetrofitService) {
 
     suspend fun getAirPollutionData() = withContext(Dispatchers.IO) {
         retrofitService.getAirPollutionDataSource()
-
     }
 }

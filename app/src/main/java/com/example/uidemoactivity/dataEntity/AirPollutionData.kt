@@ -2,8 +2,8 @@ package com.example.uidemoactivity.dataEntity
 
 import com.google.gson.annotations.SerializedName
 
-data class AirPollutionDataEntity(
+data class AirPollutionData(
     @SerializedName("records")
-    var mInfoEntity: List<AirPollutionInfoEntity>
+    var mInfoEntity: List<AirPollutionInfo>
 )
 
