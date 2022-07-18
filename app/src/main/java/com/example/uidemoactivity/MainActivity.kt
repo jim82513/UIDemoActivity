@@ -2,6 +2,8 @@ package com.example.uidemoactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
@@ -10,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uidemoactivity.adapter.RecyclerAdapter
 import com.example.uidemoactivity.databinding.ActivityMainBinding
-import com.example.uidemoactivity.retrofitBuilder.RetrofitService
+import com.example.uidemoactivity.retrofitBuilder.AirPollutionService
 import com.example.uidemoactivity.viewModelFactory.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
@@ -23,13 +25,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mFactory: MainViewModelFactory
     private lateinit var mViewModel: MainViewModel
     private lateinit var mainRepository: MainRepository
-    private lateinit var retrofitService: RetrofitService
+    private lateinit var airPollutionService: AirPollutionService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        retrofitService = RetrofitService.create()
-        mainRepository = MainRepository(retrofitService)
+        airPollutionService = AirPollutionService.create()
+        mainRepository = MainRepository(airPollutionService)
         mFactory = MainViewModelFactory.getInstance(mainRepository)
         mViewModel = ViewModelProvider(this, mFactory).get(MainViewModel::class.java).apply {
             this.startRequestAirPollutionDataSource()
@@ -42,7 +44,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
+        mBinding.searchText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                TODO("Not yet implemented")
+            }
 
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun initView() {

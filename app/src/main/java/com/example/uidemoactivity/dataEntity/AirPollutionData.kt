@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class AirPollutionData(
     @SerializedName("records")
-    var mInfoEntity: List<AirPollutionInfo>
+    val infoList: List<AirPollutionInfo>
 )
 

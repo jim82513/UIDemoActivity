@@ -18,16 +18,16 @@ class VerticalViewHolder(private val mBinding: VerticalItemViewBinding, private 
 
     private fun setClickButtonListener() {
         mBinding.clickButton.setOnClickListener{
-            listener.onClick("${entity.mSiteID} ${entity.mSiteName}")
+            listener.onClick("${entity.siteID} ${entity.siteName}")
         }
     }
 
     private fun setUIStatus() {
-        if(entity.mStatus.equals(mBinding.root.context.getString(R.string.good))){
+        if(entity.status.equals(mBinding.root.context.getString(R.string.good))){
             mBinding.status.text = mBinding.root.context.getString(R.string.go_out)
             mBinding.clickButton.visibility = View.GONE
         } else {
-            mBinding.status.text = entity.mStatus
+            mBinding.status.text = entity.status
             mBinding.clickButton.visibility = View.VISIBLE
         }
     }

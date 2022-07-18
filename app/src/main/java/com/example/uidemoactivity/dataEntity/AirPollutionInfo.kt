@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class AirPollutionInfo(
     @SerializedName("siteid")
-    var mSiteID: String,
+    val siteID: String,
     @SerializedName("sitename")
-    var mSiteName: String,
+    val siteName: String,
     @SerializedName("county")
-    var mCounty: String,
+    val county: String,
     @SerializedName("status")
-    var mStatus: String,
+    val status: String,
     @SerializedName("pm2.5")
-    var mPMStatus: String
+    val pmStatus: String
 )

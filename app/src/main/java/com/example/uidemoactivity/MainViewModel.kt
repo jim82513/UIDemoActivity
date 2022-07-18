@@ -15,32 +15,26 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
     }
 
     fun startRequestAirPollutionDataSource() {
-        viewModelScope.launch {
-            val response = repository.getAirPollutionData()
-            if (response.isSuccessful) {
-                filterList(response.body()!!.mInfoEntity.filter {
-                    it.mPMStatus.isNotEmpty()
-                }.toMutableList())
-            } else {
-                onError("Error : ${response.message()} ")
-            }
+        viewModelScope.launch(exceptionHandler) {
+            filterList(repository.getAirPollutionData()!!.infoList.filter {
+                it.pmStatus.isNotEmpty()
+            }.toMutableList())
         }
     }
 
     private fun filterList(mInfoEntity: MutableList<AirPollutionInfo>) {
         var sum = mInfoEntity.sumOf {
-            it.mPMStatus.toDouble()
+            it.pmStatus.toDouble()
         }
-
         var avg = sum / mInfoEntity.size
         mInfoEntity.filter {
-            it.mPMStatus.toFloat() <= avg
+            it.pmStatus.toFloat() <= avg
         }.let {
             topHorizontalInfoList.postValue(it.toMutableList())
         }
 
         mInfoEntity.filter {
-            it.mPMStatus.toFloat() > avg
+            it.pmStatus.toFloat() > avg
         }.let {
             downVerticalInfoList.postValue(it.toMutableList())
         }
