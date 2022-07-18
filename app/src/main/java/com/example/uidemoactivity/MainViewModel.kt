@@ -1,41 +1,38 @@
 package com.example.uidemoactivity
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.example.uidemoactivity.dataEntity.AirPollutionInfoEntity
 import kotlinx.coroutines.*
 
-class MainViewModel(application: Application, private val repository: MainRepository) :
-    AndroidViewModel(application) {
+class MainViewModel(private val repository: MainRepository) : ViewModel() {
     val errorMessage = MutableLiveData<String>()
-    var topHorizontalInfoList = MutableLiveData<MutableList<AirPollutionInfoEntity>>()
-    var downVerticalInfoList = MutableLiveData<MutableList<AirPollutionInfoEntity>>()
-    private var job: Job? = null
+    private var _topHorizontalInfoList = MutableLiveData<MutableList<AirPollutionInfoEntity>>()
+    var topHorizontalInfoList = _topHorizontalInfoList
+    private var _downVerticalInfoList = MutableLiveData<MutableList<AirPollutionInfoEntity>>()
+    var downVerticalInfoList = _downVerticalInfoList
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
     fun startRequestAirPollutionDataSource() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+        viewModelScope.launch {
             val response = repository.getAirPollutionData()
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    filterList(response.body()!!.mInfoEntity.filter {
-                        it.mPMStatus.isNotEmpty()
-                    }.toMutableList())
-                } else {
-                    onError("Error : ${response.message()} ")
-                }
+            if (response.isSuccessful) {
+                filterList(response.body()!!.mInfoEntity.filter {
+                    it.mPMStatus.isNotEmpty()
+                }.toMutableList())
+            } else {
+                onError("Error : ${response.message()} ")
             }
         }
     }
 
     private fun filterList(mInfoEntity: MutableList<AirPollutionInfoEntity>) {
-        var sum = 0f
-        for (info in mInfoEntity) {
-            sum += info.mPMStatus.toFloat()
+        var sum = mInfoEntity.sumOf {
+            it.mPMStatus.toDouble()
         }
+
         var avg = sum / mInfoEntity.size
         mInfoEntity.filter {
             it.mPMStatus.toFloat() <= avg

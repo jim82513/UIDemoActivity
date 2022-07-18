@@ -12,6 +12,11 @@ import com.example.uidemoactivity.databinding.VerticalItemViewBinding
 
 class RecyclerAdapter(private val currentType: Int, private val _listener: IClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    companion object {
+        private const val ITEM_HORIZONTAL = 0
+        private const val ITEM_VERTICAL = 1
+    }
+
     var infoList: List<AirPollutionInfoEntity> = listOf()
         set(value) {
             field = value
@@ -20,8 +25,6 @@ class RecyclerAdapter(private val currentType: Int, private val _listener: IClic
     interface IClickListener{
         fun onClick(msg: String)
     }
-    private val ITEM_HORIZONTAL = 0
-    private val ITEM_VERITCAL = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -48,7 +51,7 @@ class RecyclerAdapter(private val currentType: Int, private val _listener: IClic
         return if (currentType == ITEM_HORIZONTAL) {
             ITEM_HORIZONTAL
         } else {
-            ITEM_VERITCAL
+            ITEM_VERTICAL
         }
     }
 

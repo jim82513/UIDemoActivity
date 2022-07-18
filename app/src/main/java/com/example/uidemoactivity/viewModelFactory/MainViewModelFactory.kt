@@ -7,24 +7,24 @@ import com.example.uidemoactivity.MainRepository
 import com.example.uidemoactivity.MainViewModel
 import java.lang.IllegalArgumentException
 
-class MainViewModelFactory(private val mApplication: Application, private val mainRepository: MainRepository): ViewModelProvider.Factory {
+class MainViewModelFactory(private val mainRepository: MainRepository): ViewModelProvider.Factory {
 
     companion object {
         @Volatile
         lateinit var mInstance: MainViewModelFactory
 
-        fun getInstance(mApplication: Application, repository: MainRepository): MainViewModelFactory {
+        fun getInstance(repository: MainRepository): MainViewModelFactory {
             if(!this::mInstance.isInitialized) {
-                mInstance = MainViewModelFactory(mApplication, repository)
+                mInstance = MainViewModelFactory(repository)
             }
             return mInstance
         }
     }
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(mApplication, mainRepository) as T
+                MainViewModel(mainRepository) as T
             } else -> throw  IllegalArgumentException("UnKnown class")
         }
     }

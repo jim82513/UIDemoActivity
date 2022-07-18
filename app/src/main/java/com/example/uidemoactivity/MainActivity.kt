@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,26 +14,35 @@ import com.example.uidemoactivity.retrofitBuilder.RetrofitService
 import com.example.uidemoactivity.viewModelFactory.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        private const val HORIZONTAL_TYPE = 0
+        private const val VERTICAL_TYPE = 1
+    }
+
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mFactory: MainViewModelFactory
     private lateinit var mViewModel: MainViewModel
     private lateinit var mainRepository: MainRepository
     private lateinit var retrofitService: RetrofitService
-    private val HORIZONTAL_TYPE = 0
-    private val VERTICAL_TYPE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         retrofitService = RetrofitService.create()
         mainRepository = MainRepository(retrofitService)
-        mFactory = MainViewModelFactory.getInstance(this.application, mainRepository)
-        mViewModel = generateViewModel()
+        mFactory = MainViewModelFactory.getInstance(mainRepository)
+        mViewModel = ViewModelProvider(this, mFactory).get(MainViewModel::class.java).apply {
+            this.startRequestAirPollutionDataSource()
+        }
         mBinding.viewModel = mViewModel
         mBinding.lifecycleOwner = this
-        mViewModel.startRequestAirPollutionDataSource()
         initObserver()
+        initListener()
         initView()
+    }
+
+    private fun initListener() {
+
     }
 
     private fun initView() {
@@ -59,15 +68,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initObserver() {
         mViewModel.downVerticalInfoList.observe(this, {
-            (mBinding.verticalRecyclerView.adapter as RecyclerAdapter).infoList = it
+            (mBinding.verticalRecyclerView.adapter as? RecyclerAdapter)?.infoList = it
         })
 
         mViewModel.topHorizontalInfoList.observe(this,{
-            (mBinding.horizontalRecyclerView.adapter as RecyclerAdapter).infoList = it
+            (mBinding.horizontalRecyclerView.adapter as? RecyclerAdapter)?.infoList = it
         })
     }
 
-    private inline fun <reified T : AndroidViewModel> generateViewModel(): T {
+    private inline fun <reified T : ViewModel> generateViewModel(): T {
         return ViewModelProvider(this, mFactory).get(T::class.java)
     }
 }
