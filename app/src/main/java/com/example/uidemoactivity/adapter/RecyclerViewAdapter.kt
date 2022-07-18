@@ -10,13 +10,16 @@ import com.example.uidemoactivity.dataEntity.AirPollutionInfoEntity
 import com.example.uidemoactivity.databinding.HorizonItemViewBinding
 import com.example.uidemoactivity.databinding.VerticalItemViewBinding
 
-class RecyclerAdapter(private val currentType: Int) :
+class RecyclerAdapter(private val currentType: Int, private val _listener: IClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var infoList: List<AirPollutionInfoEntity> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+    interface IClickListener{
+        fun onClick(msg: String)
+    }
     private val ITEM_HORIZONTAL = 0
     private val ITEM_VERITCAL = 1
 
@@ -25,7 +28,7 @@ class RecyclerAdapter(private val currentType: Int) :
         return if (viewType == ITEM_HORIZONTAL) {
             HorizontalViewHolder(HorizonItemViewBinding.inflate(layoutInflater, parent, false))
         } else {
-            VerticalViewHolder(VerticalItemViewBinding.inflate(layoutInflater, parent, false))
+            VerticalViewHolder(VerticalItemViewBinding.inflate(layoutInflater, parent, false), _listener)
         }
     }
 

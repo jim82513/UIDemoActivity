@@ -10,24 +10,27 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/background_shape">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/siteID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{entity.MSiteID}"
                 android:textSize="16dp"
-                android:textColor="@color/black"
-                android:layout_marginStart="5dp"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/siteName"
@@ -45,19 +48,20 @@
                 android:text="@{entity.MPMStatus}"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"/>
+                android:layout_marginStart="5dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/county"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:textColor="@color/black"
                 android:textSize="16dp"
@@ -69,7 +73,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:textColor="@color/black"
                 android:textSize="16dp"

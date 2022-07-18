@@ -2,6 +2,7 @@ package com.example.uidemoactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -48,7 +49,12 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL
         }
         this.layoutManager = mLayoutManager
-        this.adapter = RecyclerAdapter(currentType)
+        this.adapter = RecyclerAdapter(currentType, object : RecyclerAdapter.IClickListener {
+            override fun onClick(msg: String) {
+                Toast.makeText(mBinding.root.context, msg ,
+                    Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun initObserver() {
