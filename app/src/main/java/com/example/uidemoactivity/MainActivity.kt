@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         mainRepository = MainRepository(retrofitService)
         mFactory = MainViewModelFactory.getInstance(this.application, mainRepository)
         mViewModel = generateViewModel()
+        mBinding.viewModel = mViewModel
     }
 
     private inline fun <reified T : AndroidViewModel> generateViewModel(): T {
