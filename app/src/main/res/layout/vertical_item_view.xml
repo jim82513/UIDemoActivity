@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="entity"
+            type="com.example.uidemoactivity.dataEntity.AirPollutionInfoEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <TextView
+            android:id="@+id/siteID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="10dp"
+            android:textSize="30dp"
+            android:gravity="center"
+            tool:text="1223"/>
+
+        <TextView
+            android:id="@+id/siteName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{entity.MSiteName}"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@+id/siteID"
+            app:layout_constraintEnd_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="1223"/>
+
+        <TextView
+            android:id="@+id/county"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{entity.MCounty}"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@+id/siteID"
+            app:layout_constraintTop_toBottomOf="@+id/siteName"
+            app:layout_constraintBottom_toBottomOf="@+id/siteID"
+            app:layout_constraintEnd_toEndOf="@+id/guideline"
+            android:layout_marginStart="15dp"
+            tool:text="1223"/>
+
+        <TextView
+            android:id="@+id/pmStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{entity.MPMStatus}"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="10dp"
+            android:gravity="end"
+            tool:text="1223"/>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/siteName"
+            app:layout_constraintBottom_toBottomOf="@+id/siteID"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="end"
+            android:ellipsize="end"
+            android:singleLine="true"/>
+
+        <View
+            android:id="@+id/divideLine"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

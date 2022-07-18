@@ -21,7 +21,9 @@ class MainViewModel(application: Application, private val repository: MainReposi
             val response = repository.getAirPollutionData()
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    filterList(response.body()!!.mInfoEntity.toMutableList())
+                    filterList(response.body()!!.mInfoEntity.filter {
+                        it.mPMStatus.isNotEmpty()
+                    }.toMutableList())
                 } else {
                     onError("Error : ${response.message()} ")
                 }
@@ -36,13 +38,13 @@ class MainViewModel(application: Application, private val repository: MainReposi
         }
         var avg = sum / mInfoEntity.size
         mInfoEntity.filter {
-            it.mPMStatus.toFloat() >= avg
+            it.mPMStatus.toFloat() <= avg
         }.let {
             topHorizontalInfoList.postValue(it.toMutableList())
         }
 
         mInfoEntity.filter {
-            it.mPMStatus.toFloat() < avg
+            it.mPMStatus.toFloat() > avg
         }.let {
             downVerticalInfoList.postValue(it.toMutableList())
         }

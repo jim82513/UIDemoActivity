@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">UIDemoActivity</string>
+    <string name="good">良好</string>
 </resources>
