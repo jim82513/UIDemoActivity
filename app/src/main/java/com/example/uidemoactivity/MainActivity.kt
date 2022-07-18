@@ -24,6 +24,19 @@ class MainActivity : AppCompatActivity() {
         mFactory = MainViewModelFactory.getInstance(this.application, mainRepository)
         mViewModel = generateViewModel()
         mBinding.viewModel = mViewModel
+        mBinding.lifecycleOwner = this
+        mViewModel.startRequestAirPollutionDataSource()
+        initObserver()
+    }
+
+    private fun initObserver() {
+        mViewModel.downVerticalInfoList.observe(this, {
+
+        })
+
+        mViewModel.topHorizontalInfoList.observe(this,{
+
+        })
     }
 
     private inline fun <reified T : AndroidViewModel> generateViewModel(): T {
