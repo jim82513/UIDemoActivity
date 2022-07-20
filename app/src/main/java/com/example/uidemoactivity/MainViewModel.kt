@@ -1,5 +1,7 @@
 package com.example.uidemoactivity
 
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.example.uidemoactivity.dataEntity.AirPollutionInfo
 import kotlinx.coroutines.*
@@ -10,6 +12,8 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
     var topHorizontalInfoList = _topHorizontalInfoList
     private var _downVerticalInfoList = MutableLiveData<MutableList<AirPollutionInfo>>()
     var downVerticalInfoList = _downVerticalInfoList
+    var originVerticalInfoList = mutableListOf<AirPollutionInfo>()
+    var searchText = ObservableField<String>()
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
@@ -38,6 +42,7 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
         }.let {
             downVerticalInfoList.postValue(it.toMutableList())
         }
+        originVerticalInfoList = mInfoEntity
     }
 
     private fun onError(message: String) {

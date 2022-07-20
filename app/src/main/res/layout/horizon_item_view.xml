@@ -28,7 +28,7 @@
                 android:id="@+id/siteID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{entity.MSiteID}"
+                android:text="@{entity.siteID}"
                 android:textSize="16dp"
                 android:textColor="@color/black" />
 
@@ -36,7 +36,7 @@
                 android:id="@+id/siteName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{entity.MSiteName}"
+                android:text="@{entity.siteName}"
                 android:textSize="16dp"
                 android:textColor="@color/black"
                 android:layout_marginStart="5dp"/>
@@ -45,7 +45,7 @@
                 android:id="@+id/pmStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{entity.MPMStatus}"
+                android:text="@{entity.pmStatus}"
                 android:textSize="16dp"
                 android:textColor="@color/black"
                 android:layout_marginStart="5dp" />
@@ -66,7 +66,7 @@
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 android:gravity="center"
-                android:text="@{entity.MCounty}" />
+                android:text="@{entity.county}" />
 
             <TextView
                 android:id="@+id/status"
@@ -76,7 +76,7 @@
                 android:layout_weight="1"
                 android:textColor="@color/black"
                 android:textSize="16dp"
-                android:text="@{entity.MStatus}" />
+                android:text="@{entity.status}" />
         </LinearLayout>
     </LinearLayout>
 </layout>

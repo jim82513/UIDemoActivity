@@ -2,4 +2,5 @@
     <string name="app_name">UIDemoActivity</string>
     <string name="good">良好</string>
     <string name="go_out">The status is good, we want to go out to have fun</string>
+    <string name="initial_search_text">輸入「站名」查詢該地區空污資訊</string>
 </resources>
