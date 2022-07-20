@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.Observable
 import androidx.databinding.ObservableField
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         airPollutionService = AirPollutionService.create()
         mainRepository = MainRepository(airPollutionService)
         mFactory = MainViewModelFactory.getInstance(mainRepository)
-        mViewModel = ViewModelProvider(this, mFactory).get(MainViewModel::class.java).apply {
+        mViewModel = ViewModelProvider(this, mFactory)[MainViewModel::class.java].apply {
             this.startRequestAirPollutionDataSource()
         }
         mBinding.viewModel = mViewModel
@@ -61,8 +60,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        mBinding.searchText.onFocusChangeListener = object : View.OnFocusChangeListener {
-            override fun onFocusChange(p0: View?, focus: Boolean) {
+        mBinding.searchText.onFocusChangeListener =
+            View.OnFocusChangeListener { _, focus ->
                 if (focus) {
                     mBinding.filterRecyclerView.visibility = View.VISIBLE
                     mBinding.searchingText.visibility = View.VISIBLE
@@ -75,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                     mBinding.verticalRecyclerView.visibility = View.VISIBLE
                 }
             }
-        }
 
         mBinding.back.setOnClickListener {
             mBinding.searchText.clearFocus()
@@ -107,6 +105,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+
     private fun initObserver() {
         mViewModel.downVerticalInfoList.observe(this, {
             (mBinding.verticalRecyclerView.adapter as? RecyclerAdapter)?.infoList = it
@@ -123,28 +122,28 @@ class MainActivity : AppCompatActivity() {
                 showFilterUIStatus(searchingText.get().toString())
             }
         })
+        mViewModel.errorMessage.observe(this, {
+            mBinding.searchingText.text = it
+        })
     }
 
     private fun showFilterUIStatus(searchingText: String) {
-        if(searchingText.isEmpty()) {
+        if (searchingText.isEmpty()) {
             mBinding.filterRecyclerView.visibility = View.GONE
-            mBinding.searchingText.text = "輸入「站名」查詢該地區空污資訊"
+            (mBinding.filterRecyclerView.adapter as? RecyclerAdapter)?.infoList = emptyList()
+            mBinding.searchingText.text = getString(R.string.initial_search_text)
         } else {
-            val list =  mViewModel.originVerticalInfoList.filter {
+            val list = mViewModel.originVerticalInfoList.filter {
                 it.siteName.contains(searchingText)
             }
-            if(list.isEmpty()) {
-                mBinding.searchingText.text = "找不到「$searchingText」相關的空污資料"
+            if (list.isEmpty()) {
+                mBinding.searchingText.text = String.format(getString(R.string.initial_search_text),searchingText)
             } else {
+                mBinding.searchingText.visibility = View.GONE
                 mBinding.filterRecyclerView.visibility = View.VISIBLE
                 (mBinding.filterRecyclerView.adapter as? RecyclerAdapter)?.infoList = list
             }
         }
-    }
-
-
-    private inline fun <reified T : ViewModel> generateViewModel(): T {
-        return ViewModelProvider(this, mFactory).get(T::class.java)
     }
 
     override fun onBackPressed() {

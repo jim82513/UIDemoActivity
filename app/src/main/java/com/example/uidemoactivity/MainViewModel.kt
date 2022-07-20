@@ -1,6 +1,5 @@
 package com.example.uidemoactivity
 
-import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.example.uidemoactivity.dataEntity.AirPollutionInfo
@@ -14,12 +13,14 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
     var downVerticalInfoList = _downVerticalInfoList
     var originVerticalInfoList = mutableListOf<AirPollutionInfo>()
     var searchText = ObservableField<String>()
+    var showProgress = ObservableField(false)
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
     fun startRequestAirPollutionDataSource() {
         viewModelScope.launch(exceptionHandler) {
+            showProgress.set(true)
             filterList(repository.getAirPollutionData()!!.infoList.filter {
                 it.pmStatus.isNotEmpty()
             }.toMutableList())
@@ -43,6 +44,7 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
             downVerticalInfoList.postValue(it.toMutableList())
         }
         originVerticalInfoList = mInfoEntity
+        showProgress.set(false)
     }
 
     private fun onError(message: String) {

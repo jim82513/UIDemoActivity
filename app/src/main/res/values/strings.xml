@@ -3,4 +3,5 @@
     <string name="good">良好</string>
     <string name="go_out">The status is good, we want to go out to have fun</string>
     <string name="initial_search_text">輸入「站名」查詢該地區空污資訊</string>
+    <string name="enter_default_text">找不到「%s」相關的空污資料</string>
 </resources>
